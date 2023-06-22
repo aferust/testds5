@@ -40,7 +40,6 @@ public class MainWindow {
     private static Label labelRight;
     private static Label labelDown;
     private static Label labelPS;
-    private static Label labelMic;
     private static Label labelTriangle;
     private static Label labelSquare;
     private static Label labelCircle;
@@ -57,11 +56,20 @@ public class MainWindow {
     private static Label labelBottomRight;
     private static Spinner spinnerLeftRumble;
     private static Spinner spinnerRightRumble;
+    private static Button buttonMic;
+    private static Label labelAX;
+    private static Label labelAY;
+    private static Label labelAZ;
+    private static Composite compositeGyroscope;
+    private static Label lblGyroscope;
+    private static Label labelGX;
+    private static Label labelGY;
+    private static Label labelGZ;
 
     public static void main(String[] args) {
         display = new Display();
         shell = new Shell(display);
-        shell.setMinimumSize(new Point(600, 500));
+        shell.setMinimumSize(new Point(650, 550));
         shell.setSize(576, 420);
         shell.setText("PS5 Controller GUI");
 
@@ -213,10 +221,6 @@ public class MainWindow {
         R2force.setText("0");
         R2force.setBounds(310, 30, 60, 20);
         
-        labelMic = new Label(compositeButtons, SWT.NONE);
-        labelMic.setText("Mic");
-        labelMic.setBounds(172, 155, 37, 20);
-        
         spinnerLeftRumble = new Spinner(compositeButtons, SWT.BORDER);
         spinnerLeftRumble.setMaximum(255);
         spinnerLeftRumble.setBounds(0, 149, 59, 26);
@@ -232,6 +236,10 @@ public class MainWindow {
         Label lblRrumble = new Label(compositeButtons, SWT.NONE);
         lblRrumble.setBounds(310, 130, 60, 20);
         lblRrumble.setText("RRumble");
+        
+        buttonMic = new Button(compositeButtons, SWT.NONE);
+        buttonMic.setBounds(152, 156, 60, 20);
+        buttonMic.setText("Mic");
         new Label(compositeRoot, SWT.NONE);
         
         Composite compositeRightStick = new Composite(compositeRoot, SWT.NONE);
@@ -293,7 +301,37 @@ public class MainWindow {
         labelBottomRight.setText("Bottom right");
         new Label(compositeRoot, SWT.NONE);
         new Label(compositeRoot, SWT.NONE);
-        new Label(compositeRoot, SWT.NONE);
+        
+        Composite compositeAccel = new Composite(compositeRoot, SWT.NONE);
+        compositeAccel.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+        
+        Label lblAccelerometer = new Label(compositeAccel, SWT.NONE);
+        lblAccelerometer.setBounds(4, 0, 107, 20);
+        lblAccelerometer.setText("Accelerometer");
+        
+        Label lblAX = new Label(compositeAccel, SWT.NONE);
+        lblAX.setBounds(4, 26, 15, 20);
+        lblAX.setText("x:");
+        
+        labelAX = new Label(compositeAccel, SWT.NONE);
+        labelAX.setBounds(31, 26, 70, 20);
+        labelAX.setText("0");
+        
+        Label lblAY = new Label(compositeAccel, SWT.NONE);
+        lblAY.setBounds(4, 52, 15, 20);
+        lblAY.setText("y:");
+        
+        labelAY = new Label(compositeAccel, SWT.NONE);
+        labelAY.setBounds(31, 52, 70, 20);
+        labelAY.setText("0");
+        
+        Label lblAZ = new Label(compositeAccel, SWT.NONE);
+        lblAZ.setBounds(4, 79, 15, 20);
+        lblAZ.setText("z:");
+        
+        labelAZ = new Label(compositeAccel, SWT.NONE);
+        labelAZ.setBounds(31, 79, 70, 20);
+        labelAZ.setText("0");
         
         Composite compositeTouch = new Composite(compositeRoot, SWT.NONE);
         compositeTouch.setLayout(null);
@@ -306,7 +344,37 @@ public class MainWindow {
         compositeDispTouch.setBounds(0, 20, 374, 124);
         compositeDispTouch.setLayout(new RowLayout(SWT.HORIZONTAL));
         new Label(compositeRoot, SWT.NONE);
-        new Label(compositeRoot, SWT.NONE);
+        
+        compositeGyroscope = new Composite(compositeRoot, SWT.NONE);
+        compositeGyroscope.setLayoutData(new GridData(SWT.LEFT, SWT.FILL, false, false, 1, 1));
+        
+        lblGyroscope = new Label(compositeGyroscope, SWT.NONE);
+        lblGyroscope.setText("Gyroscope");
+        lblGyroscope.setBounds(4, 0, 107, 20);
+        
+        Label lblGX = new Label(compositeGyroscope, SWT.NONE);
+        lblGX.setText("x:");
+        lblGX.setBounds(4, 26, 15, 20);
+        
+        labelGX = new Label(compositeGyroscope, SWT.NONE);
+        labelGX.setText("0");
+        labelGX.setBounds(31, 26, 70, 20);
+        
+        Label lblGY = new Label(compositeGyroscope, SWT.NONE);
+        lblGY.setText("y:");
+        lblGY.setBounds(4, 52, 15, 20);
+        
+        labelGY = new Label(compositeGyroscope, SWT.NONE);
+        labelGY.setText("0");
+        labelGY.setBounds(31, 52, 70, 20);
+        
+        Label lblGZ = new Label(compositeGyroscope, SWT.NONE);
+        lblGZ.setText("z:");
+        lblGZ.setBounds(4, 79, 15, 20);
+        
+        labelGZ = new Label(compositeGyroscope, SWT.NONE);
+        labelGZ.setText("0");
+        labelGZ.setBounds(31, 79, 70, 20);
         
         Composite compositeBattery = new Composite(shell, SWT.NONE);
         compositeBattery.setLayout(null);
