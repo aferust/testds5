@@ -1,0 +1,16 @@
+.dub
+dub.selections.json
+docs.json
+__dummy.html
+docs/
+/testds5
+*.so
+*.dylib
+*.dll
+*.a
+*.lib
+*.exe
+*.pdb
+*.o
+*.obj
+*.lst

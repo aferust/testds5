@@ -1,0 +1,15 @@
+{
+    "authors": [
+        "Ferhat Kurtulmuş"
+    ],
+    "copyright": "Copyright © 2023, user",
+    "dependencies": {
+        "dwt": "~>1.0.5+swt-3.4.1",
+        "ds5w": "~>0.0.2"
+    },
+    "description": "A gui program for testing Dualsense and Edge controllers.",
+    "license": "boost",
+    "name": "testds5",
+    "subConfigurations": {"dwt": "windows-win32"},
+    "lflags-windows": ["D:/projects/d_projects/dwt/win-res/resource.res"]
+}
