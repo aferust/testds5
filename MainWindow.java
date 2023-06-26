@@ -65,6 +65,7 @@ public class MainWindow {
     private static Label labelGX;
     private static Label labelGY;
     private static Label labelGZ;
+    private static Label labelHPhoneConnected;
 
     public static void main(String[] args) {
         display = new Display();
@@ -380,12 +381,12 @@ public class MainWindow {
         compositeBattery.setLayout(null);
         
         Label lblBattery = new Label(compositeBattery, SWT.NONE);
-        lblBattery.setBounds(0, 0, 50, 20);
+        lblBattery.setBounds(0, 0, 84, 20);
         lblBattery.setText("Battery:");
         
         Composite composite_1 = new Composite(compositeBattery, SWT.NONE);
         composite_1.setLocation(104, -3);
-        composite_1.setSize(335, 23);
+        composite_1.setSize(509, 23);
         composite_1.setLayout(null);
         
         labelChargingStat = new Label(composite_1, SWT.NONE);
@@ -407,6 +408,14 @@ public class MainWindow {
         labelFullYesNo = new Label(composite_1, SWT.NONE);
         labelFullYesNo.setText("No");
         labelFullYesNo.setBounds(260, 3, 37, 20);
+        
+        Label lblHPhone = new Label(composite_1, SWT.NONE);
+        lblHPhone.setBounds(299, 3, 137, 20);
+        lblHPhone.setText("H.phone connected:");
+        
+        labelHPhoneConnected = new Label(composite_1, SWT.NONE);
+        labelHPhoneConnected.setBounds(442, 3, 57, 20);
+        labelHPhoneConnected.setText("No");
         
         label = new Label(shell, SWT.NONE);
         label.setText("                                           ");

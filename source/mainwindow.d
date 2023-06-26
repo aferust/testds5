@@ -22,6 +22,7 @@ import org.eclipse.swt.widgets.Button;
 import mainwindowgen;
 import touchpad;
 import controller;
+import schedule;
 
 class MainWindow : MainWindowGen {
 
@@ -30,6 +31,8 @@ class MainWindow : MainWindowGen {
     DSColor ledColor;
 
     private DS5OutputState _outState;
+
+    Schedule devConnListener;
 
     this(Display display){
         this.display = display;
@@ -49,10 +52,7 @@ class MainWindow : MainWindowGen {
         devsCombo.addSelectionListener(new class SelectionAdapter {
             override void widgetSelected(SelectionEvent e) {
                 int selectedIndex = devsCombo.getSelectionIndex();
-                foreach (controller; controllers) {
-                    controller.disconnectAll();
-                }
-                controllers[selectedIndex].connect(&watchControllerInput);
+                devsComboActivateSelection(selectedIndex);
             }
         });
 
@@ -106,6 +106,63 @@ class MainWindow : MainWindowGen {
                 outState = ostate;
             }
         });
+
+        devConnListener = new Schedule(&checkAndUpdateDevConnections, 250);
+    }
+
+    void devsComboActivateSelection(int selectedIndex){
+        foreach (controller; controllers) {
+            controller.disconnectAll();
+        }
+        if(controllers.length)
+            controllers[selectedIndex].connect(&watchControllerInput);
+    }
+
+    void checkAndUpdateDevConnections(){
+        import std.algorithm.mutation : remove;
+        // clear disconnected devices
+        foreach_reverse (i, controller; controllers)
+        {
+            if(!controller.connected){
+                devsCombo.remove(cast(int)i);
+                controller.disconnect(&watchControllerInput);
+                controllers = controllers.remove(i);
+                devsCombo.select(0);
+                devsComboActivateSelection(0);
+            }
+        }
+        devsinfo[] = DeviceEnumInfo.init;
+        auto numberOfDevs = findDevices(devsinfo[]);
+        if(controllers.length != numberOfDevs){
+            foreach (i; 0 .. numberOfDevs){
+                if(controllers.length == 0){
+                    auto newCont = new DSController(devsinfo[i]);
+                    controllers ~= newCont;
+                    devsCombo.add(newCont.getTitle);
+                    devsCombo.select(0);
+                    devsComboActivateSelection(0);
+                }else{
+                    auto clen = controllers.length;
+                    foreach(k; 0..clen)
+                    {
+                        auto controller = controllers[k];
+                        
+                        if(!canFindDev(controllers, devsinfo[i])){
+                            // new controller is connected
+                            
+                            auto newCont = new DSController(devsinfo[i]);
+                            controllers ~= newCont;
+                            devsCombo.add(newCont.getTitle);
+                            auto newi = devsCombo.getChildrenCount();
+                            devsCombo.select(newi);
+                            devsComboActivateSelection(cast(int)newi);
+                        }
+                            
+                    }
+                }
+                
+            }
+        }
     }
 
     void watchControllerInput(DS5InputState in_state){
@@ -184,6 +241,7 @@ class MainWindow : MainWindowGen {
         labelGY.setText(format!"%d"(in_state.gyroscope.y));
         labelGZ.setText(format!"%d"(in_state.gyroscope.z));
 
+        labelHPhoneConnected.setText(in_state.headPhoneConnected ? "Yes" : "No");
         labelRY.getParent().redraw();
     }
 
@@ -197,6 +255,7 @@ class MainWindow : MainWindowGen {
                 display.sleep();
             }
 
+            devConnListener.processAndRun;
             foreach (controller; controllers)
             {
                 controller.updateInState();

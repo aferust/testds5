@@ -2,9 +2,9 @@
     "authors": [
         "Ferhat Kurtulmuş"
     ],
-    "copyright": "Copyright © 2023, user",
+    "copyright": "Copyright © 2023, Ferhat Kurtulmuş",
     "dependencies": {
-        "dwt": "~>1.0.5+swt-3.4.1",
+        "dwt": {"repository": "git+https://github.com/d-widget-toolkit/dwt.git", "version": "~master"},
         "ds5w": "~>0.0.2"
     },
     "description": "A gui program for testing Dualsense and Edge controllers.",

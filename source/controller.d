@@ -42,21 +42,22 @@ import std.signals;
 
 class DSController
 {
-    bool connected;
-
     DeviceEnumInfo info;
     DeviceContext con;
     private DS5InputState _inState;
-    //private DS5OutputState _outState;
 
     this(DeviceEnumInfo info)
     {
         this.info = info;
 
-        if (DS5W_SUCCESS(initDeviceContext(&info, &con)))
+        if (!DS5W_SUCCESS(initDeviceContext(&info, &con)))
         {
-            connected = true;
+            throw new Exception("Cannot initialize the requested device!");
         }
+    }
+
+    bool connected (){
+        return con._internal.connected;
     }
 
     DeviceConnection getConnectionType()
@@ -96,4 +97,16 @@ class DSController
     }
 
     mixin Signal!(DS5InputState);
+}
+
+bool sameDevs(W)(W path1, W path2)
+{
+    return path1[34..42] == path2[34..42];
+}
+
+bool canFindDev(Arr, Dev)(Arr arr, ref Dev dev){
+    foreach (a; arr)
+        if(sameDevs(dev._internal.path[], a.info._internal.path[]))
+            return true;
+    return false;
 }
