@@ -10,6 +10,7 @@
     "description": "A gui program for testing Dualsense and Edge controllers.",
     "license": "boost",
     "name": "testds5",
+    "version": "0.0.1",
     "subConfigurations": {"dwt": "windows-win32"},
     "lflags-windows": ["D:/projects/d_projects/dwt/win-res/resource.res"]
 }
